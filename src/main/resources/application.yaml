@@ -1,12 +1,15 @@
+server:
+  port: 8087
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/sns
-    username: postgres
-    password: 1005
+    username: ${name}
+    password: ${pw}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       dialect: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate.format_sql: true
