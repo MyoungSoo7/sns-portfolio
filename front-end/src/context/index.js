@@ -18,7 +18,7 @@ Coded by www.creative-tim.com
   you can customize the states for the different components here.
 */
 
-import { createContext, useContext, useReducer, useMemo } from 'react';
+import {createContext, useContext, useMemo, useReducer} from 'react';
 
 // prop-types is a library for typechecking of props
 import PropTypes from 'prop-types';

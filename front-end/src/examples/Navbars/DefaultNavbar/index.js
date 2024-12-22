@@ -13,10 +13,10 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState, useEffect } from 'react';
+import {useEffect, useState} from 'react';
 
 // react-router components
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 // prop-types is a library for typechecking of props.
 import PropTypes from 'prop-types';
@@ -38,7 +38,7 @@ import DefaultNavbarMobile from 'examples/Navbars/DefaultNavbar/DefaultNavbarMob
 import breakpoints from 'assets/theme/base/breakpoints';
 
 // Material Dashboard 2 React context
-import { useMaterialUIController } from 'context';
+import {useMaterialUIController} from 'context';
 
 function DefaultNavbar({ transparent, light, action }) {
   const [controller] = useMaterialUIController();

@@ -11,11 +11,11 @@ Coded by www.creative-tim.com
  =========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+ */
 
 // @mui material components
 import Icon from '@mui/material/Icon';
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 
 export default styled(Icon)(({ theme, ownerState }) => {
   const { palette, functions, typography } = theme;

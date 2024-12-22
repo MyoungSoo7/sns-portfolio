@@ -11,12 +11,11 @@ Coded by www.creative-tim.com
  =========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+ */
 
 // @mui material components
-import { createTheme } from '@mui/material/styles';
+import {createTheme} from '@mui/material/styles';
 // import Fade from "@mui/material/Fade";
-
 // Material Dashboard 2 React base styles
 import colors from 'assets/theme/base/colors';
 import breakpoints from 'assets/theme/base/breakpoints';

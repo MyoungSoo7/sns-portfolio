@@ -14,9 +14,8 @@ Coded by www.creative-tim.com
 */
 
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router';
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router';
 
 // @mui material components
 import Grid from '@mui/material/Grid';
@@ -27,15 +26,10 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 // Material Dashboard 2 React components
 import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
-import MDInput from 'components/MDInput';
-import MDButton from 'components/MDButton';
 import MDPagination from 'components/MDPagination';
 
 // Material Dashboard 2 React example components
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
-import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
-import Footer from 'examples/Footer';
-import DataTable from 'examples/Tables/DataTable';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';

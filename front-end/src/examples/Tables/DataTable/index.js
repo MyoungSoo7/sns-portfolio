@@ -13,13 +13,13 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useMemo, useEffect, useState } from 'react';
+import {useEffect, useMemo, useState} from 'react';
 
 // prop-types is a library for typechecking of props
 import PropTypes from 'prop-types';
 
 // react-table components
-import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy } from 'react-table';
+import {useAsyncDebounce, useGlobalFilter, usePagination, useSortBy, useTable} from 'react-table';
 
 // @mui material components
 import Table from '@mui/material/Table';

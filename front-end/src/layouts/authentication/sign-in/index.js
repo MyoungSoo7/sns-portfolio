@@ -13,24 +13,19 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from 'react';
 import * as React from 'react';
+import {useState} from 'react';
 
 // react-router-dom components
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router';
+import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 
 // @mui material components
 import Card from '@mui/material/Card';
-import Switch from '@mui/material/Switch';
 import Grid from '@mui/material/Grid';
-import MuiLink from '@mui/material/Link';
 
 // @mui icons
-import FacebookIcon from '@mui/icons-material/Facebook';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import GoogleIcon from '@mui/icons-material/Google';
-import { TransitionProps } from '@mui/material/transitions';
+import {TransitionProps} from '@mui/material/transitions';
 
 // Material Dashboard 2 React components
 import MDBox from 'components/MDBox';
@@ -47,7 +42,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 
 // Authentication layout components
-import BasicLayout from 'layouts/authentication/components/BasicLayout';
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 import axios from 'axios';
 

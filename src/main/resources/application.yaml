@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/sns
-    username: ${name}
-    password: ${pw}
+    username: postgres
+    password: 1005
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -21,7 +21,7 @@ spring:
 
 
 jwt:
-  secret-key: fast-campus.simple_sns_2022_secret_key
+  secret-key: ${swkey}
   # 30 days
   token.expired-time-ms: 2592000000
 
