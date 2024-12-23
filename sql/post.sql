@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS public.post
     updated_at timestamp without time zone,
     user_id integer,
     CONSTRAINT post_pkey PRIMARY KEY (id),
-    CONSTRAINT fk455dwbntke4dylt74tdbc90s1 FOREIGN KEY (user_id)
+    CONSTRAINT post_fkey FOREIGN KEY (user_id)
         REFERENCES public."user" (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -21,4 +21,4 @@ CREATE TABLE IF NOT EXISTS public.post
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.post
-    OWNER to sohthnduwbipay;
+    OWNER to post;

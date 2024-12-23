@@ -12,10 +12,10 @@ CREATE TABLE IF NOT EXISTS public."user"
     updated_at timestamp without time zone,
     user_name character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT user_pkey PRIMARY KEY (id),
-    CONSTRAINT uk_lqjrcobrh9jc8wpcar64q1bfh UNIQUE (user_name)
+    CONSTRAINT uk_name UNIQUE (user_name)
 )
 
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public."user"
-    OWNER to sohthnduwbipay;
+    OWNER to post;
