@@ -14,7 +14,9 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@Table(name = "\"post\"")
+@Table(name = "\"post\"", indexes = {
+        @Index(name = "idx_post_user_id", columnList = "user_id")
+})
 @SQLDelete(sql = "UPDATE \"post\" SET removed_at = NOW() WHERE id=?")
 @Where(clause = "removed_at is NULL")
 @NoArgsConstructor

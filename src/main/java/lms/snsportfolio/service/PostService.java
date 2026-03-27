@@ -40,11 +40,12 @@ public class PostService {
         postEntityRepository.save(postEntity);
     }
 
-    // entity mapping
+    @Transactional(readOnly = true)
     public Page<Post> list(Pageable pageable) {
         return postEntityRepository.findAll(pageable).map(Post::fromEntity);
     }
 
+    @Transactional(readOnly = true)
     public Page<Post> my(Integer userId, Pageable pageable) {
         return postEntityRepository.findAllByUserId(userId, pageable).map(Post::fromEntity);
     }
@@ -86,6 +87,7 @@ public class PostService {
         alarmProducer.send(new AlarmEvent(AlarmType.NEW_COMMENT_ON_POST, new AlarmArgs(userEntity.getId(), postId), postEntity.getUser().getId()));
     }
 
+    @Transactional(readOnly = true)
     public Page<Comment> getComments(Integer postId, Pageable pageable) {
         PostEntity postEntity = postEntityRepository.findById(postId).orElseThrow(() -> new SimpleSnsApplicationException(ErrorCode.POST_NOT_FOUND, String.format("postId is %d", postId)));
         return commentEntityRepository.findAllByPost(postEntity, pageable).map(Comment::fromEntity);
@@ -108,10 +110,10 @@ public class PostService {
         alarmProducer.send(new AlarmEvent(AlarmType.NEW_LIKE_ON_POST, new AlarmArgs(userEntity.getId(), postId), postEntity.getUser().getId()));
     }
 
+    @Transactional(readOnly = true)
     public Integer getLikeCount(Integer postId) {
         PostEntity postEntity = postEntityRepository.findById(postId).orElseThrow(() -> new SimpleSnsApplicationException(ErrorCode.POST_NOT_FOUND, String.format("postId is %d", postId)));
-        List<LikeEntity> likes = likeEntityRepository.findAllByPost(postEntity);
-        return likes.size();
+        return likeEntityRepository.countByPost(postEntity);
     }
 
 }

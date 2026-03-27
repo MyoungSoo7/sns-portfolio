@@ -13,7 +13,10 @@ import java.time.Instant;
 @Setter
 @Getter
 @Entity
-@Table(name = "\"like\"")
+@Table(name = "\"like\"", indexes = {
+        @Index(name = "idx_like_post_id", columnList = "post_id"),
+        @Index(name = "idx_like_user_post", columnList = "user_id, post_id")
+})
 @SQLDelete(sql = "UPDATE \"like\" SET removed_at = NOW() WHERE id=?")
 @Where(clause = "removed_at is NULL")
 @NoArgsConstructor

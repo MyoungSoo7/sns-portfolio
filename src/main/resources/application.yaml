@@ -1,5 +1,9 @@
 server:
   port: 8087
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+    min-response-size: 1024
 
 spring:
   datasource:
@@ -7,13 +11,24 @@ spring:
     username: {username}
     password: {password}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 15
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+      max-lifetime: 1200000
   jpa:
     hibernate:
       ddl-auto: create
       dialect: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate.format_sql: true
+      hibernate.default_batch_fetch_size: 30
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      hibernate.jdbc.batch_size: 30
     show-sql: true
+    open-in-view: false
   redis:
     url: redis://localhost:6379
     host: localhost
@@ -27,44 +42,20 @@ jwt:
 
 spring.kafka:
     properties:
-      security.protocol: PLAINTEXT  # ?? ???? ??
+      security.protocol: PLAINTEXT
     consumer:
-      properties.spring.json.trusted.packages: "*"  # JSON ??? ?? ??
-      bootstrap-servers: localhost:9092  # ?? Kafka ??? ??
-      group-id: notification  # ??? ?? ID
-      auto-offset-reset: latest  # ?? ????? ??
+      properties.spring.json.trusted.packages: "*"
+      bootstrap-servers: localhost:9092
+      group-id: notification
+      auto-offset-reset: latest
       key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     listener:
-      ack-mode: MANUAL  # ?? ACK ??
+      ack-mode: MANUAL
     producer:
-      bootstrap-servers: localhost:9092  # ?? Kafka ??? ??
+      bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      properties.enable.idempotence: false  # ??? ????
+      properties.enable.idempotence: false
     topic:
-      notification: notification-topic  # ???? ??? ?? ??
-
-
-#spring:
-#  kafka:
-#    properties:
-#      security.protocol: SASL_SSL
-#      sasl.mechanism: SCRAM-SHA-256
-#      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="r2rj2fh0" password="e_BnIr6ESAbpmuu7L7XugsMNmYlx3eFq";
-#    consumer:
-#      properties.spring.json.trusted.packages: "*"
-#      bootstrap-servers: dory-01.srvs.cloudkafka.com:9094, dory-02.srvs.cloudkafka.com:9094, dory-03.srvs.cloudkafka.com:9094
-#      group-id: notification
-#      auto-offset-reset: latest
-#      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
-#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-#    listener:
-#      ack-mode: MANUAL
-#    producer:
-#      bootstrap-servers: dory-01.srvs.cloudkafka.com:9094, dory-02.srvs.cloudkafka.com:9094, dory-03.srvs.cloudkafka.com:9094
-#      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
-#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-#      properties.enable.idempotence: false
-#    topic:
-#      notification: r2rj2fh0-notification
+      notification: notification-topic
