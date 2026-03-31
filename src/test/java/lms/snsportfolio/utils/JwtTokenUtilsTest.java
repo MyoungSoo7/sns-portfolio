@@ -19,16 +19,16 @@ class JwtTokenUtilsTest {
         assertThat(valid).isTrue();
     }
 
-    @Test @DisplayName("잘못된 토큰 검증 실패")
+    @Test @DisplayName("잘못된 토큰은 예외 발생")
     void invalidToken() {
-        Boolean valid = JwtTokenUtils.validate("invalid.token.here", "user", SECRET);
-        assertThat(valid).isFalse();
+        assertThatThrownBy(() -> JwtTokenUtils.validate("invalid.token.here", "user", SECRET))
+                .isInstanceOf(Exception.class);
     }
 
     @Test @DisplayName("토큰에서 사용자명 추출")
-    void getUserName() {
+    void getUsername() {
         String token = JwtTokenUtils.generateAccessToken("myuser", SECRET, EXPIRE_MS);
-        String userName = JwtTokenUtils.getUserName(token, SECRET);
+        String userName = JwtTokenUtils.getUsername(token, SECRET);
         assertThat(userName).isEqualTo("myuser");
     }
 }
