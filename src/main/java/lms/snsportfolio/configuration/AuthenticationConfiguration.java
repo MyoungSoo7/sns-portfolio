@@ -6,46 +6,49 @@ import lms.snsportfolio.exception.CustomAuthenticationEntryPoint;
 import lms.snsportfolio.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class AuthenticationConfiguration extends WebSecurityConfigurerAdapter {
+public class AuthenticationConfiguration {
 
     private final UserService userService;
     @Value("${jwt.secret-key}")
     private String secretKey;
 
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().regexMatchers("^(?!/api/).*");
-
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring().requestMatchers("/", "/index.html", "/favicon.ico",
+                "/css/**", "/js/**", "/images/**", "/assets/**", "/static/**");
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api/*/users/join", "/api/*/users/login").permitAll()
-                .antMatchers("/api/*/users/alarm/subscribe/*").permitAll()
-                .antMatchers("/api/**").authenticated()
-                .anyRequest().permitAll()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-                .and()
-                .addFilterBefore(new JwtTokenFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class);
-    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/api/*/users/join", "/api/*/users/login").permitAll()
+                        .requestMatchers("/api/*/users/alarm/subscribe/*").permitAll()
+                        .requestMatchers("/api/**").authenticated()
+                        .anyRequest().permitAll()
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                )
+                .addFilterBefore(new JwtTokenFilter(userService, secretKey),
+                        UsernamePasswordAuthenticationFilter.class);
 
+        return http.build();
+    }
 }

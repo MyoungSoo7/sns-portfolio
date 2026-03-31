@@ -6,8 +6,8 @@
 
 ## 기술 스택
 
-- **언어**: Java 11
-- **프레임워크**: Spring Boot 2.6.7
+- **언어**: Java 17
+- **프레임워크**: Spring Boot 3.2.5
 - **데이터베이스**: PostgreSQL
 - **캐시**: Redis (Lettuce)
 - **메시지 브로커**: Kafka
