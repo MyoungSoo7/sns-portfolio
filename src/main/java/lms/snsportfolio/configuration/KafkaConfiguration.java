@@ -13,7 +13,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
-//@Configuration
+@Configuration
 public class KafkaConfiguration {
 
     @Value("${spring.kafka.producer.bootstrap-servers}")

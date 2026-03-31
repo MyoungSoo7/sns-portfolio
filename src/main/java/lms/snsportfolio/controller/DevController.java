@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@org.springframework.context.annotation.Profile("dev")
 @RestController
 @RequestMapping("/api-dev/v1")
 @RequiredArgsConstructor
