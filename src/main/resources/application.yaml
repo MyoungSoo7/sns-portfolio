@@ -37,8 +37,8 @@ spring:
 
 jwt:
   secret-key: ${swkey}
-  # 30 days
-  token.expired-time-ms: 2592000000
+  # 7 days
+  token.expired-time-ms: 604800000
 
 spring.kafka:
     properties:
