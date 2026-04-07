@@ -1,6 +1,10 @@
 package lms.snsportfolio.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lms.snsportfolio.model.AlarmArgs;
 import lms.snsportfolio.model.AlarmEvent;
 import lms.snsportfolio.model.AlarmType;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Dev", description = "개발 환경 전용 디버깅/테스트 엔드포인트 (profile=dev)")
 @org.springframework.context.annotation.Profile("dev")
 @RestController
 @RequestMapping("/api-dev/v1")
@@ -23,12 +28,20 @@ public class DevController {
     private final UserEntityRepository userEntityRepository;
     private final AlarmProducer alarmProducer;
 
+    @Operation(summary = "알림 전송 테스트", description = "특정 사용자에게 테스트 알림을 직접 전송한다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "테스트 실행 완료")
+    })
     @GetMapping("/notification")
     public void test() {
         UserEntity entity = userEntityRepository.findById(5).orElseThrow();
         notificationService.send(AlarmType.NEW_LIKE_ON_POST, new AlarmArgs(0, 0), entity.getId());
     }
 
+    @Operation(summary = "Kafka 이벤트 발행 테스트", description = "Kafka AlarmProducer로 알림 이벤트를 발행한다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "발행 완료")
+    })
     @GetMapping("/send")
     public void send() {
         alarmProducer.send(new AlarmEvent(AlarmType.NEW_LIKE_ON_POST, new AlarmArgs(0, 0), 5));
