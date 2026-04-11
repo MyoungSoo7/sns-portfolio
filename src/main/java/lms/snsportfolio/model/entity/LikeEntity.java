@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 import jakarta.persistence.*;
 import java.sql.Timestamp;
@@ -18,7 +18,7 @@ import java.time.Instant;
         @Index(name = "idx_like_user_post", columnList = "user_id, post_id")
 })
 @SQLDelete(sql = "UPDATE \"like\" SET removed_at = NOW() WHERE id=?")
-@Where(clause = "removed_at is NULL")
+@SQLRestriction("removed_at is NULL")
 @NoArgsConstructor
 public class LikeEntity {
 

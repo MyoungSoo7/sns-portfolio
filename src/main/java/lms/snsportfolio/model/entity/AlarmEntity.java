@@ -1,14 +1,14 @@
 package lms.snsportfolio.model.entity;
 
-import io.hypersistence.utils.hibernate.type.json.JsonType;
 import lms.snsportfolio.model.AlarmArgs;
 import lms.snsportfolio.model.AlarmType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.type.SqlTypes;
 
 import jakarta.persistence.*;
 import java.sql.Timestamp;
@@ -21,7 +21,7 @@ import java.time.Instant;
         @Index(name = "user_id_idx", columnList = "user_id")
 })
 @SQLDelete(sql = "UPDATE \"alarm\" SET removed_at = NOW() WHERE id=?")
-@Where(clause = "removed_at is NULL")
+@SQLRestriction("removed_at is NULL")
 @NoArgsConstructor
 public class AlarmEntity {
 
@@ -36,7 +36,7 @@ public class AlarmEntity {
     @Enumerated(EnumType.STRING)
     private AlarmType alarmType;
 
-    @Type(JsonType.class)
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
     private AlarmArgs args;
 

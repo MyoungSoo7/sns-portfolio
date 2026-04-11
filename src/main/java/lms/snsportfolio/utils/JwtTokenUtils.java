@@ -2,11 +2,10 @@ package lms.snsportfolio.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
+import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
-import java.security.Key;
 import java.util.Date;
 
 public class JwtTokenUtils {
@@ -17,18 +16,18 @@ public class JwtTokenUtils {
     }
 
     public static Claims extractAllClaims(String token, String key) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey(key))
+        return Jwts.parser()
+                .verifyWith(getSigningKey(key))
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     public static String getUsername(String token, String key) {
         return extractAllClaims(token, key).get("username", String.class);
     }
 
-    private static Key getSigningKey(String secretKey) {
+    private static SecretKey getSigningKey(String secretKey) {
         byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
     }
@@ -43,14 +42,11 @@ public class JwtTokenUtils {
     }
 
     private static String doGenerateToken(String username, long expireTime, String key) {
-        Claims claims = Jwts.claims();
-        claims.put("username", username);
-
         return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expireTime))
-                .signWith(getSigningKey(key), SignatureAlgorithm.HS256)
+                .claim("username", username)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + expireTime))
+                .signWith(getSigningKey(key))
                 .compact();
     }
 }

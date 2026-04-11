@@ -3,7 +3,7 @@ package lms.snsportfolio.configuration;
 import io.lettuce.core.RedisURI;
 import lms.snsportfolio.model.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
+import org.springframework.boot.data.redis.autoconfigure.DataRedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -18,7 +18,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @EnableRedisRepositories
 @RequiredArgsConstructor
 public class RedisConfiguration {
-    private final RedisProperties redisProperties;
+    private final DataRedisProperties redisProperties;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
