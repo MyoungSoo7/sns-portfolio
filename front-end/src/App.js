@@ -13,13 +13,13 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import {useEffect, useMemo, useState} from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 // react-router components
-import {Navigate, Route, Routes, useLocation} from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 // @mui material components
-import {ThemeProvider} from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Icon from '@mui/material/Icon';
 
@@ -40,14 +40,14 @@ import themeDarkRTL from 'assets/theme-dark/theme-rtl';
 
 // RTL plugins
 import rtlPlugin from 'stylis-plugin-rtl';
-import {CacheProvider} from '@emotion/react';
+import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 
 // Material Dashboard 2 React routes
 import routes from 'routes';
 
 // Material Dashboard 2 React contexts
-import {setMiniSidenav, setOpenConfigurator, useMaterialUIController} from 'context';
+import { setMiniSidenav, setOpenConfigurator, useMaterialUIController } from 'context';
 
 // Images
 import brandWhite from 'assets/images/logo-ct.png';
@@ -192,8 +192,7 @@ export default function App() {
       <Routes>
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/feed" />} />
-        <Route path="/modify-post" element=<ModifyPost /> />
-        <Route path="/post-detail" element=<PostDetail /> />
+        {/* TODO: ModifyPost, PostDetail 컴포넌트 구현 후 복원 */}
       </Routes>
     </ThemeProvider>
   );
