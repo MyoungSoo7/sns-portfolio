@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AlarmProducer {
 
-    private final KafkaTemplate<Integer, AlarmEvent> alarmEventKafkaTemplate;
+    private final KafkaTemplate<String, AlarmEvent> alarmEventKafkaTemplate;
 
     @Value("${spring.kafka.topic.notification}")
     private String topic;
 
     public void send(AlarmEvent event) {
-        alarmEventKafkaTemplate.send(topic, event.getReceiverUserId(), event);
+        alarmEventKafkaTemplate.send(topic, String.valueOf(event.getReceiverUserId()), event);
         log.info("send fin");
     }
 }
