@@ -19,7 +19,7 @@ spring:
       max-lifetime: 1200000
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       dialect: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate.format_sql: true
@@ -44,7 +44,7 @@ spring.kafka:
     properties:
       security.protocol: PLAINTEXT
     consumer:
-      properties.spring.json.trusted.packages: "*"
+      properties.spring.json.trusted.packages: "lms.snsportfolio.model"
       bootstrap-servers: localhost:9092
       group-id: notification
       auto-offset-reset: latest
