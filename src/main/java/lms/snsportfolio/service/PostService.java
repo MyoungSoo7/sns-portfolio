@@ -69,9 +69,10 @@ public class PostService {
         if (!Objects.equals(postEntity.getUser().getId(), userId)) {
             throw new SimpleSnsApplicationException(ErrorCode.INVALID_PERMISSION, String.format("user %s has no permission with post %d", userId, postId));
         }
-        likeEntityRepository.deleteAllByPost(postEntity);
+        // 자식 엔티티 먼저 soft-delete (FK 순서)
         commentEntityRepository.deleteAllByPost(postEntity);
-        postEntityRepository.delete(postEntity);
+        likeEntityRepository.deleteAllByPost(postEntity);
+        postEntityRepository.delete(postEntity);  // 부모 마지막
     }
 
     @Transactional
