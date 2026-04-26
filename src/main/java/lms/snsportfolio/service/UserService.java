@@ -37,10 +37,13 @@ public class UserService {
 
 
     public User loadUserByUsername(String userName) throws UsernameNotFoundException {
-        return redisRepository.getUser(userName).orElseGet(
-                () -> userRepository.findByUserName(userName).map(User::fromEntity).orElseThrow(
-                        () -> new SimpleSnsApplicationException(ErrorCode.USER_NOT_FOUND, String.format("userName is %s", userName))
-                ));
+        return redisRepository.getUser(userName).orElseGet(() -> {
+            User user = userRepository.findByUserName(userName).map(User::fromEntity).orElseThrow(
+                    () -> new SimpleSnsApplicationException(ErrorCode.USER_NOT_FOUND, String.format("userName is %s", userName))
+            );
+            redisRepository.setUser(user);  // DB 조회 후 Redis 캐시 갱신
+            return user;
+        });
     }
 
     public String login(String userName, String password) {
